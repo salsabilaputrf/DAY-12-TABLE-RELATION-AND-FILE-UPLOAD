@@ -7,6 +7,7 @@ import (
 	"strconv"
 	"strings"
 	"table-relation-file-upload/connection"
+	"table-relation-file-upload/middleware"
 	"time"
 
 	// "log"
@@ -38,6 +39,7 @@ type dataProject struct {
 	Description  string
 	Technologies []string
 	User_id	     int
+	Image 		 string
 	Duration     string
 }
 
@@ -57,16 +59,16 @@ func main() {
 
 	// static folder
 	route.PathPrefix("/public/").Handler(http.StripPrefix("/public/", http.FileServer(http.Dir("./public"))))
-
+	route.PathPrefix("/uploads/").Handler(http.StripPrefix("/uploads/", http.FileServer(http.Dir("./uploads/"))))
 	// routing
 	route.HandleFunc("/", home).Methods("GET").Name("home")
 	route.HandleFunc("/contact", contactMe).Methods("GET")
 	route.HandleFunc("/addProject", addProject).Methods("GET")
-	route.HandleFunc("/addProject", addProjectInput).Methods("POST")
+	route.HandleFunc("/addProject", middleware.UploadFile(addProjectInput)).Methods("POST")
 	route.HandleFunc("/detailProject/{id}", detailProject).Methods("GET")
 	route.HandleFunc("/deleteProject/{id}", deleteProject).Methods("GET")
 	route.HandleFunc("/editProject/{id}", editProject).Methods("GET")
-	route.HandleFunc("/editProjectInput/{id}", editProjectInput).Methods("POST")
+	route.HandleFunc("/editProjectInput/{id}", middleware.UploadFile(editProjectInput)).Methods("POST")
 
 	route.HandleFunc("/register", formRegister).Methods("GET")
 	route.HandleFunc("/register", register).Methods("POST")
@@ -125,7 +127,7 @@ func home(w http.ResponseWriter, r *http.Request) {
     if session.Values["IsLogin"] != true {
         Data.IsLogin = false
 
-		rows, err := connection.Conn.Query(context.Background(), "SELECT project_name, start_date, end_date, description, technologies FROM tb_project")
+		rows, err := connection.Conn.Query(context.Background(), "SELECT project_name, start_date, end_date, description, technologies, image FROM tb_project")
 		if err != nil {
 			fmt.Println(err.Error())
 			return
@@ -134,7 +136,7 @@ func home(w http.ResponseWriter, r *http.Request) {
 		for rows.Next() {
 			var each = dataProject{}
 
-			var err = rows.Scan(&each.ProjectName, &each.StartDate, &each.EndDate, &each.Description, &each.Technologies)
+			var err = rows.Scan(&each.ProjectName, &each.StartDate, &each.EndDate, &each.Description, &each.Technologies, &each.Image)
 			if err != nil {
 				fmt.Println(err.Error())
 				return
@@ -149,7 +151,7 @@ func home(w http.ResponseWriter, r *http.Request) {
 
 		user := session.Values["Id"]
 
-		rows, err := connection.Conn.Query(context.Background(), "SELECT tb_project.id, project_name, start_date, end_date, description, technologies FROM tb_user LEFT JOIN tb_project ON tb_project.user_id = tb_user.id WHERE tb_project.user_id = $1 ", user)
+		rows, err := connection.Conn.Query(context.Background(), "SELECT tb_project.id, project_name, start_date, end_date, description, technologies, image FROM tb_user LEFT JOIN tb_project ON tb_project.user_id = tb_user.id WHERE tb_project.user_id = $1 ", user)
 		if err != nil {
 			fmt.Println(err.Error())
 			return
@@ -158,7 +160,7 @@ func home(w http.ResponseWriter, r *http.Request) {
 		for rows.Next() {
 			var each = dataProject{}
 
-			var err = rows.Scan(&each.Id, &each.ProjectName, &each.StartDate, &each.EndDate, &each.Description, &each.Technologies)
+			var err = rows.Scan(&each.Id, &each.ProjectName, &each.StartDate, &each.EndDate, &each.Description, &each.Technologies, &each.Image)
 			if err != nil {
 				fmt.Println(err.Error())
 				return
@@ -265,6 +267,9 @@ func addProjectInput(w http.ResponseWriter, r *http.Request) {
 	// End Date
 	endDateTime, _ := time.Parse("2006-01-02", endDate)
 
+	dataContex := r.Context().Value("dataFile")
+    image := dataContex.(string)
+
 	var store = sessions.NewCookieStore([]byte("SESSION_ID"))
     session, _ := store.Get(r, "SESSION_ID")
 
@@ -277,14 +282,12 @@ func addProjectInput(w http.ResponseWriter, r *http.Request) {
 
 	user := session.Values["Id"].(int)
 
-	_, err = connection.Conn.Exec(context.Background(), "INSERT INTO tb_project(project_name, start_date, end_date, description, technologies, user_id) VALUES ($1, $2, $3, $4, $5, $6)", projectName, startDateTime, endDateTime, desc, tech, user)
+	_, err = connection.Conn.Exec(context.Background(), "INSERT INTO tb_project(project_name, start_date, end_date, description, technologies, user_id, image) VALUES ($1, $2, $3, $4, $5, $6, $7)", projectName, startDateTime, endDateTime, desc, tech, user, image)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		w.Write([]byte("message : " + err.Error()))
 		return
 	}
-
-	
 
 	http.Redirect(w, r, "/", http.StatusMovedPermanently)
 }
@@ -369,8 +372,8 @@ func editProject(w http.ResponseWriter, r *http.Request) {
 
 	ProjectDetail := dataProject{}
 
-	err = connection.Conn.QueryRow(context.Background(), "SELECT id, project_name, start_date, end_date, description, technologies FROM tb_project WHERE id=$1", ID).Scan(
-		&ProjectDetail.Id, &ProjectDetail.ProjectName, &ProjectDetail.StartDate, &ProjectDetail.EndDate, &ProjectDetail.Description, &ProjectDetail.Technologies)
+	err = connection.Conn.QueryRow(context.Background(), "SELECT id, project_name, start_date, end_date, description, technologies, image FROM tb_project WHERE id=$1", ID).Scan(
+		&ProjectDetail.Id, &ProjectDetail.ProjectName, &ProjectDetail.StartDate, &ProjectDetail.EndDate, &ProjectDetail.Description, &ProjectDetail.Technologies, &ProjectDetail.Image)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		w.Write([]byte("message : " + err.Error()))
@@ -405,6 +408,9 @@ func editProjectInput(w http.ResponseWriter, r *http.Request) {
 	// End Date
 	endDateTime, _ := time.Parse("2006-01-02", endDate)
 
+	dataContex := r.Context().Value("dataFile")
+    image := dataContex.(string)
+
 	var store = sessions.NewCookieStore([]byte("SESSION_ID"))
     session, _ := store.Get(r, "SESSION_ID")
 
@@ -417,7 +423,7 @@ func editProjectInput(w http.ResponseWriter, r *http.Request) {
 
 	ID, _ := strconv.Atoi(mux.Vars(r)["id"])
 
-	_, err = connection.Conn.Exec(context.Background(), "UPDATE tb_project SET project_name = $1, start_date = $2, end_date = $3, description = $4, technologies = $5 WHERE id=$6", projectName, startDateTime, endDateTime, desc, tech, ID)
+	_, err = connection.Conn.Exec(context.Background(), "UPDATE tb_project SET project_name = $1, start_date = $2, end_date = $3, description = $4, technologies = $5, image = $6 WHERE id=$7", projectName, startDateTime, endDateTime, desc, tech, image, ID)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		w.Write([]byte("message : " + err.Error()))
