@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Personal Web</title>
+        <link rel="stylesheet" href="/public/asset/css/form.css">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    </head>
+
+    <body>
+		<nav class="navbar navbar-expand-lg d-flex fixed-top" style="background-color: #b0fc90; width: 100vw; margin: 0;">
+            <div class="container-fluid" style="padding: 0px 100px;">
+                <a class="navbar-brand" href="index.html">
+                    <img src="/public/asset/image/logo.png" alt="Logo Dumbways" style="width: 60px; height: auto">
+                </a>
+
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav fs-5 "  >
+                      <li class="nav-item">
+                        <a class="nav-link fw-semibold" style="color: black;" href="/">Home</a>
+                      </li>
+                      <li class="nav-item">
+                        <a href="/addProject" class="nav-link fw-normal" style="color: black;">Add Project</a>
+                      </li>
+                    </ul>
+                </div>
+
+				<ul class="navbar-nav ms-auto mb-2 mb-lg-0 fs-5" style="padding-right: 30px;">
+					{{if .Data.IsLogin}}
+                    <li class="nav-item">
+                      <a href="#" class="nav-link" style="margin-right: 20px">Hello, {{.Data.UserName}} </a>
+                    </li>
+                    <li class="nav-item">
+                      <a href="/logout" class="nav-link list-active" style="margin-right: 20px">Logout</a>
+                    </li>
+                    {{else}}
+                    <li class="nav-item">
+                      <a class="nav-link active" style="margin-right: 20px" aria-current="page" href="/register">Register</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link active" aria-current="page" href="/login">Login</a>
+                    </li>
+					{{end}}
+                </ul>
+
+                  <!-- Contact Me -->
+				  <div class="d-flex ">
+                    <a href="/contact" class="btn rounded-3 fs-5" style="padding: 8px 20px; background-color:#ec4d37; color: #fff; text-decoration: none;">Contact Me</a>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Content -->
+        <div class="container-fluid " style="background-color: #807d7d; width: 100%; margin: 0; padding: 100px 10vw; ">
+			<div class=" container-fluid rounded-4 d-flex flex-column justify-content-center " style=" width:700px;background-color:#8bf35b;padding: 50px;gap: 10px;box-shadow: 0px 15px 100px rgb(56, 133, 17);">
+				<h2 class="fw-bold text-center">UPDATE MY PROJECT</h2>
+				<!-- ini adalah form input -->
+				<form class="row g-3 " style="width: 450px; margin: 0px auto; padding-bottom: 70px;" action="/editProjectInput/{{.ProjectDetail.Id}}" method="POST" >
+					<div class="col-12">
+						<label for="project_name" class="form-label fw-bold">Project Name</label>
+						<input type="text" class="form-control" id="project_name" name="projectName" value="{{.ProjectDetail.ProjectName}}" >
+					</div>
+
+					<div class="col-md-6">
+						<label for="start_date" class="form-label fw-bold">Start Date</label>
+						<input type="date" class="form-control" id="start_date" name="startDate" value="{{.ProjectDetail.StartDate.Format "2006-01-02"}}" />
+					</div>
+					
+					<div class="col-md-6">
+						<label  for="end_date" class="form-label fw-bold">End Date</label>
+						<input type="date" class="form-control" id="end_date" name="endDate" value="{{.ProjectDetail.EndDate.Format "2006-01-02"}}">
+					</div>
+
+					<div class="col-12">
+						<label for="desc" class="form-label fw-bold">Description</label>
+						<textarea id="desc" rows="7" class="form-control" name="desc" >{{.ProjectDetail.Description}}</textarea>
+					</div>
+
+					<div class="tech">
+						<label for="tech" class="form-label fw-bold">Technologies</label>
+						<div class="d-flex flex-wrap justify-content-start" style="gap: 20px 200px;" id="tech">
+								<div class="form-check ">
+									<input class="form-check-input" type="checkbox" name="technologi" value="nodeJs" id="nodeJs" {{ range $index, $data := .ProjectDetail.Technologies }}{{ if eq $data "nodeJs"  }} checked {{end}}{{end}}/>
+									<label class="form-check-label" for="nodeJs">Node Js</label>
+								</div>
+								<div class="form-check">
+									<input class="form-check-input" type="checkbox" name="technologi" value="reactJs" id="reactJs" {{ range $index, $data := .ProjectDetail.Technologies }}{{ if eq $data "reactJs"  }} checked {{end}}{{end}}/>
+									<label class="form-check-label" for="reactJs">React Js</label>
+								</div>
+								<div class="form-check">
+									<input class="form-check-input" type="checkbox" name="technologi" value="nextJs" id="nextJs" {{ range $index, $data := .ProjectDetail.Technologies }}{{ if eq $data "nextJs"  }} checked {{end}}{{end}}/>
+									<label class="form-check-label" for="nextJs">Next Js</label>
+								</div>
+								
+								<div class="form-check" style="padding-left: 30px">
+									<input class="form-check-input" type="checkbox" name="technologi" value="typeScript" id="typeScript" {{ range $index, $data := .ProjectDetail.Technologies }}{{ if eq $data "typeScript"  }} checked {{end}}{{end}}/>
+									<label class="form-check-label" for="typeScript">TypeScript</label>
+								</div>
+							
+						</div>
+					
+					</div>
+
+					<div class="mb-3">
+						<label for="upload_img" class="form-label fw-bold">Upload Image</label>
+						<div class="upload_btn">
+							<label for="upload_img">
+								<p>Choose</p>
+								<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-paperclip" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+									<path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+									<path d="M15 7l-6.5 6.5a1.5 1.5 0 0 0 3 3l6.5 -6.5a3 3 0 0 0 -6 -6l-6.5 6.5a4.5 4.5 0 0 0 9 9l6.5 -6.5"></path>
+								</svg>
+							</label>
+							<input class="form-control-sm" type="file" id="upload_img" name="upload-img" accept="image/*" hidden>
+						</div>
+					  </div>
+
+					<div class="btn d-flex justify-content-end btn-submit">
+						<button type="submit">Update</button>
+					</div>
+				</form>
+			</div>
+          	
+      	</div>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+    </body>
+</html>

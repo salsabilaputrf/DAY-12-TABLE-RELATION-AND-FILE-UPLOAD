@@ -1,0 +1,17 @@
+* {
+    margin:0;
+    font-family: 'Poppins', sans-serif;
+    padding: 0;
+}
+
+.btn-delete:hover {
+    background-color: orangered;
+    border: none;
+    transition: 500ms;
+}
+
+.btn-edit:hover {
+    background-color: orangered;
+    border: none;
+    transition: 500ms;
+}

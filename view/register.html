@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Personal Web</title>
+        <link rel="stylesheet" href="/public/asset/css/form.css">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    </head>
+
+    <body>
+		<nav class="navbar navbar-expand-lg d-flex fixed-top" style="background-color: #b0fc90; width: 100vw; margin: 0;">
+            <div class="container-fluid" style="padding: 0px 100px;">
+                <a class="navbar-brand" href="/">
+                    <img src="/public/asset/image/logo.png" alt="Logo Dumbways" style="width: 60px; height: auto">
+                </a>
+
+                <div class="collapse navbar-collapse">
+                    <ul class="navbar-nav fs-5 "  >
+                      <li class="nav-item">
+                        <a class="nav-link fw-normal active" aria-current="page" style="color: black;" href="/">Home</a>
+                      </li>
+                      {{if .Data.IsLogin}}
+                      <li class="nav-item">
+                        <a href="/addProject" class="nav-link fw-normal active" aria-current="page" style="color: black;">Add Project</a>
+                      </li>
+                      {{end}}
+                    </ul>
+                </div>
+
+                
+                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0 fs-5" style="padding-right: 30px;">
+                        <li class="nav-item">
+                          <a class="nav-link active" style="color: orangered; margin-right: 20px" aria-current="page" href="/register">Register</a>
+                        </li>
+                        <li class="nav-item">
+                          <a class="nav-link active" aria-current="page" href="/login">Login</a>
+                        </li>
+                    </ul>
+    
+                
+                
+                <!-- Contact Me -->
+				<div class="d-flex ">
+                    <a href="/contact" class="btn rounded-3 fs-5" style="padding: 8px 20px; background-color:#ec4d37; color: #fff; text-decoration: none;">Contact Me</a>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Content -->
+        <div class="container-fluid " style="background-color: #807d7d; width: 100%; margin: 0; padding: 100px 10vw; ">
+			<div class=" container-fluid rounded-4 d-flex flex-column justify-content-center " style=" width:700px;background-color:#8bf35b;padding: 50px;gap: 10px;box-shadow: 0px 15px 100px rgb(56, 133, 17);">
+				<h3 class="fw-bold text-center mb-4">REGISTER YOUR ACCOUNT</h3>
+
+				<!-- ini adalah form input -->
+				<form class="row g-3 " style="width: 450px; margin: 0px auto; padding-bottom: 70px;" action="/register" method="POST">
+					<div class="col-14 mb-3" >
+						<label for="name" class="form-label fw-bold">Name</label>
+						<input type="text" class="form-control" id="name" name="Name" >
+					</div>
+
+					<div class="col-14 mb-3" >
+						<label for="email" class="form-label fw-bold">Email</label>
+						<input type="email" class="form-control" id="email" name="Email" >
+					</div>
+
+					<div class="col-14 mb-3" >
+						<label for="password" class="form-label fw-bold">Password</label>
+						<input type="password" class="form-control" id="password" name="Password" >
+					</div>
+
+					<div class="btn d-flex justify-content-end btn-submit">
+						<button type="submit">Submit</button>
+					</div>
+				</form>
+			</div>
+          	
+      	</div>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+    </body>
+</html>

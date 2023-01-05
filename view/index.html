@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Personal Web</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+        <link rel="stylesheet" href="/public/asset/css/style.css">
+    </head>
+
+    <body>
+        <nav class="navbar navbar-expand-lg d-flex fixed-top m-0 w-100" style="background-color: #b0fc90; ">
+            <div class="container-fluid" style="padding: 0px 100px;">
+                <a class="navbar-brand" href="/">
+                    <img src="/public/asset/image/logo.png" alt="Logo Dumbways" style="width: 60px; height: auto">
+                </a>
+
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav fs-5 "  >
+                      <li class="nav-item">
+                        <a class="nav-link fw-semibold active" aria-current="page" style="color: black;" href="/">Home</a>
+                      </li>
+                      {{if .Data.IsLogin}}
+                      <li class="nav-item">
+                        <a href="/addProject" class="nav-link fw-normal" style="color: black;">Add Project</a>
+                      </li>
+                      {{end}}
+                    </ul>
+                </div>
+
+                
+
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0 fs-5" style="padding-right: 30px;">
+                    {{if .Data.IsLogin}}
+                    <li class="nav-item">
+                      <a href="#" class="nav-link" style="margin-right: 20px">Hello, {{.Data.UserName}} </a>
+                    </li>
+                    <li class="nav-item">
+                      <a href="/logout" class="nav-link list-active" style="margin-right: 20px">Logout</a>
+                    </li>
+                    {{else}}
+                    <li class="nav-item">
+                      <a class="nav-link active" style="margin-right: 20px" aria-current="page" href="/register">Register</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link active" aria-current="page" href="/login">Login</a>
+                    </li>
+                    {{end}}
+                </ul>
+
+                  <!-- Contact Me -->
+                <div class="d-flex ">
+                    <a href="/contact" class="btn rounded-3 fs-5" style="padding: 8px 20px; background-color:#ec4d37; color: #fff; text-decoration: none;">Contact Me</a>
+                </div>
+            </div>
+        </nav>
+        
+        
+
+        <!-- Content -->
+        <div class="container-fluid" style="background-color: #807d7d; width: 100%; margin: 0; padding: 120px 10vw;" >
+            {{if .Data.FlashData}}
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                {{.Data.FlashData}}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {{end}}
+            <div class=" container-fluid rounded-4 d-flex " style="background-color:#8bf35b;padding: 50px;gap: 80px;box-shadow: 0px 15px 100px rgb(56, 133, 17);">
+                <div class="d-flex justify-content-start flex-column" style="flex: 50%;padding-top: 50px;padding-bottom: 30px;padding-left: 50px;">
+                    <h3 class="fw-bold">Hi Welcome to my hut</h3>
+                    <p style="text-align: justify;">Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellendus soluta vero blanditiis doloribus est eius, itaque iusto rem sapiente similique aut totam eum rerum distinctio adipisci tempore, eos accusamus laudantium. Lorem ipsum dolor sit, amet consectetur adipisicing elit. Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+                    
+                    <!-- Contact -->
+                    <div class="d-inline-flex mt-3 gap-4 ">
+                        <a href="#" class="btn btn-dark contact" style="text-decoration: none; padding: 6px 20px; background-color: #111727; color: white; border-radius: 180px; ">contact</a>
+                        <p>download CV <a href="/public/asset/file/CV-Salsabila Putri Fathiyah.pdf" download>
+                            <img class="logo-download" src="/public/asset/icon/download.svg" alt="download icon" style="width: 20px;"/></a>
+                        </p>
+                    </div>
+
+                    <div class="d-inline-flex gap-4 mt-5 sosmed">
+                        <a href="https://www.linkedin.com/in/salsabila-putri-fathiyah/">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-linkedin" style="background-color: #111727; color:white; text-decoration:none; padding:8px; border-radius: 360px;" width="45" height="45" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                            <rect x="4" y="4" width="16" height="16" rx="2"></rect>
+                            <line x1="8" y1="11" x2="8" y2="16"></line>
+                            <line x1="8" y1="8" x2="8" y2="8.01"></line>
+                            <line x1="12" y1="16" x2="12" y2="11"></line>
+                            <path d="M16 16v-3a2 2 0 0 0 -4 0"></path>
+                        </svg></a>
+        
+                        <a href="https://www.instagram.com/salsabila_putrf/" >
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-instagram" style="background-color: #111727; color:white; text-decoration:none; padding:8px; border-radius: 360px;"  width="45" height="45" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                            <rect x="4" y="4" width="16" height="16" rx="4"></rect>
+                            <circle cx="12" cy="12" r="3"></circle>
+                            <line x1="16.5" y1="7.5" x2="16.5" y2="7.501"></line>
+                        </svg></a>
+        
+                        <a href="https://www.facebook.com/salsabylla.putri.1" >
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-facebook" style="background-color: #111727; color:white; text-decoration:none; padding:8px; border-radius: 360px;"  width="45" height="45" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                            <path d="M7 10v4h3v7h4v-7h3l1 -4h-4v-2a1 1 0 0 1 1 -1h3v-4h-3a5 5 0 0 0 -5 5v2h-3"></path>
+                            </svg>
+                        </a>
+        
+                        <a href="https://twitter.com/chacha260302" >
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-twitter" style="background-color: #111727; color:white; text-decoration:none; padding:8px; border-radius: 360px;"  width="45" height="45" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                            <path d="M22 4.01c-1 .49 -1.98 .689 -3 .99c-1.121 -1.265 -2.783 -1.335 -4.38 -.737s-2.643 2.06 -2.62 3.737v1c-3.245 .083 -6.135 -1.395 -8 -4c0 0 -4.182 7.433 4 11c-1.872 1.247 -3.739 2.088 -6 2c3.308 1.803 6.913 2.423 10.034 1.517c3.58 -1.04 6.522 -3.723 7.651 -7.742a13.84 13.84 0 0 0 .497 -3.753c-.002 -.249 1.51 -2.772 1.818 -4.013z"></path>
+                            </svg>
+                        </a> 
+                    </div>
+                </div>
+
+                <div class="d-flex justify-content-end" style="align-content: center;">
+                    <!-- Profile Card -->
+                    <div class="card" style="width: 23rem; height: 28rem; box-shadow: 0px 2px 10px #968f8f;">
+                        <img src="/public/asset/image/profil.jpg" class="card-img-top" style="width: auto; height: 350px" alt="avatar profile"/>
+                        <div class="card-body text-center">
+                            <h5 class="card-title fw-bold">Salsabila Putri Fathiyah</h5>
+                            <h6 class="card-subtitle">Fullstack Developer</h6>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="container-fluid mt-0" style="background-color: #f8f8f8; padding: 30px; width: 100%;">
+            <h3 class="fw-bold m-0 text-center mb-5" style="color: black;">MY PROJECT</h3>
+            <div class="d-flex flex-wrap justify-content-center align-items-baseline gap-5" id="project">
+
+                <!-- Dynamic Content -->
+                {{range $index, $data := .Projects}}
+                <!-- Card 1 -->
+                <div class="card rounded-4" style="width: 23rem; height: auto; box-shadow: 0px 5px 20px #4e4c4c; background-color: white; padding:20px;">
+                    <div class="project_img" style="width: 100%;height: 300px;">
+                        <img src="/public/asset/image/dummy.png" style="width: 100%; height: 100%; border-radius: 15px; object-fit: cover;" alt="Project Image" class="image"/> 
+                    </div>
+                    <div class="project_content" style="margin-top: 20px;">
+                        <p class="fs-4 mb-0 title" style="color: #1a1919;">
+                            <a href="/detailProject/{{$data.Id}}" style="text-decoration: none; color: black; font-weight: bold;" target="_blank">{{$data.ProjectName}}</a>
+                        </p>
+                        <p class="duration" style="color: #544a4a;">Durasi: {{$data.Duration}}</p>
+                        <p class="desc" style="text-align: justify; color:#1a1919">{{$data.Description}}</p>
+                        <div class="technology mb-3">
+                            {{range $index, $data := $data.Technologies}}
+                            <img src="/public/asset/icon/icons-{{$data}}.svg" style="width: 50px" alt="">
+                            {{end}}
+                        </div>
+                        {{if $.Data.IsLogin}}
+                        <div class="d-flex gap-3 justify-content-between btn-group">
+                            <a class="btn rounded-4 btn-dark btn-edit" href="/editProject/{{$data.Id}}">edit</a>
+                            <a class="btn rounded-4 btn-dark btn-delete" href="/deleteProject/{{$data.Id}}">delete</a>
+                        </div>
+                        {{end}}
+                    </div>                  
+                </div>
+                {{end}}
+                
+                
+        </div>
+        
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+    </body>
+</html>

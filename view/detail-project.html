@@ -1,0 +1,108 @@
+<!Doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Personal Web</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    </head>
+
+    <body >
+        <nav class="navbar navbar-expand-lg d-flex fixed-top m-0 w-100" style="background-color: #b0fc90; ">
+            <div class="container-fluid" style="padding: 0px 100px;">
+                <a class="navbar-brand" href="index.html">
+                    <img src="/public/asset/image/logo.png" alt="Logo Dumbways" style="width: 60px; height: auto">
+                </a>
+
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav fs-5 "  >
+                      <li class="nav-item">
+                        <a class="nav-link fw-semibold "  style="color: black;" href="/">Home</a>
+                      </li>
+                      <li class="nav-item">
+                        <a href="/addProject" class="nav-link fw-normal" style="color: black;">Add Project</a>
+                      </li>
+                    </ul>
+                </div>
+
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0 fs-5" style="padding-right: 30px;">
+                    {{if .Data.IsLogin}}
+                    <li class="nav-item">
+                      <a href="#" class="nav-link" style="margin-right: 20px">Hello, {{.Data.UserName}} </a>
+                    </li>
+                    <li class="nav-item">
+                      <a href="/logout" class="nav-link list-active" style="margin-right: 20px">Logout</a>
+                    </li>
+                    {{else}}
+                    <li class="nav-item">
+                      <a class="nav-link active" style="margin-right: 20px" aria-current="page" href="/register">Register</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link active" aria-current="page" href="/login">Login</a>
+                    </li>
+                    {{end}}
+                </ul>
+
+                  <!-- Contact Me -->
+                <div class="d-flex ">
+                    <a href="/contact" class="btn rounded-3 fs-5" style="padding: 8px 20px; background-color:#ec4d37; color: #fff; text-decoration: none;">Contact Me</a>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Content -->
+        <div class="container-fluid" style="background-color: #807d7d; width: 100%; margin: 0; padding: 120px 10vw;" >
+            <div class=" container-fluid rounded-4 d-flex flex-column " style="background-color:#8bf35b;padding: 50px;gap: 50px;box-shadow: 0px 15px 100px rgb(56, 133, 17);">
+                <h2 class="fw-bold m-0 text-center mb-0" style="color: black;">{{.ProjectDetail.ProjectName}}</h2>
+                <div class="d-flex m-0 gap-5 ">
+                    <div class="content-left" >
+                        <img src="https://images.unsplash.com/photo-1670672950186-06319ae47429?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=435&q=80" style="width: 500px; height: 400px; object-fit: cover;"alt="Project Image">
+                    </div>
+        
+                    <div class="content-right" style="padding-left: 30px; padding-top:10px">
+                        <div class="d-flex flex-column gap-4 mb-5 duration">
+                            <h3 style="color: black;">Duration</h3>
+                            <div class="d-flex flex-column gap-2">
+                                <div class="d-flex calendar gap-3">
+                                    <img src="https://img.icons8.com/ios-glyphs/30/1A1A1A/calendar.png" style="width: 30px; height:30px;" alt="calendar">
+                                    <p style="color: black; font-weight:500">{{.ProjectDetail.StartDate.Format "02 Jan 2006"}} - {{.ProjectDetail.EndDate.Format "02 Jan 2006"}}</p>
+                                </div>
+            
+                                <div class="d-flex timeSpan gap-3">
+                                    <img src="https://img.icons8.com/ios-glyphs/30/1A1A1A/time-span.png" style="width: 30px; height:30px;" alt="time span">
+                                    <p style="color: black; font-weight:500">{{.ProjectDetail.Duration}}</p>
+                                </div>
+                            </div>   
+                        </div>
+        
+                        <div class="d-flex flex-column gap-4 technologies">
+                            <h3 style="color: black;">Technologies</h3>
+                            <div class="d-flex flex-wrap gap-4 ">
+                                {{range $index, $data := .ProjectDetail.Technologies}}
+                                    <div class="d-flex gap-3 align-items-center">
+                                        <img src="/public/asset/icon/icons-{{$data}}.svg" style="width:40px;" alt="">
+                                        {{if eq $data "nodeJs"}}
+                                            <p style="color: black; font-weight:500">Node Js</p>
+                                        {{else if eq $data "reactJs"}}
+                                            <p style="color: black;font-weight:500">React Js</p>
+                                        {{else if eq $data "nextJs"}}
+                                            <p style="color: black;font-weight:500">Next Js</p>
+                                        {{else}}
+                                            <p style="color: black;font-weight:500">TypeScript</p>
+                                        {{end}}
+                                    </div>
+                                {{end}}
+                            </div>        
+                        </div>
+                    </div>
+                </div>    
+        
+                <div class="content-down">
+                    <p style="text-align: justify; color:black">{{.ProjectDetail.Description}}</p>
+                </div>
+                
+            </div>
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+    </body>
+</html>
