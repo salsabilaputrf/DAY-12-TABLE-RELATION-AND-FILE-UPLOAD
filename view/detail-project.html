@@ -8,7 +8,7 @@
     </head>
 
     <body >
-        <nav class="navbar navbar-expand-lg d-flex fixed-top m-0 w-100" style="background-color: #b0fc90; ">
+        <nav class="navbar navbar-expand-lg d-flex fixed-top m-0 w-100" style="background-color: #CBAF87; ">
             <div class="container-fluid" style="padding: 0px 100px;">
                 <a class="navbar-brand" href="index.html">
                     <img src="/public/asset/image/logo.png" alt="Logo Dumbways" style="width: 60px; height: auto">
@@ -51,12 +51,12 @@
         </nav>
 
         <!-- Content -->
-        <div class="container-fluid" style="background-color: #807d7d; width: 100%; margin: 0; padding: 120px 10vw;" >
-            <div class=" container-fluid rounded-4 d-flex flex-column " style="background-color:#8bf35b;padding: 50px;gap: 50px;box-shadow: 0px 15px 100px rgb(56, 133, 17);">
+        <div class="container-fluid" style="background-color: #F6DCBF; width: 100%; margin: 0; padding: 120px 10vw;" >
+            <div class=" container-fluid rounded-4 d-flex flex-column " style="background-color:#CBAF87;padding: 50px;gap: 50px;box-shadow:0px 10px 40px rgb(40, 41, 39);">
                 <h2 class="fw-bold m-0 text-center mb-0" style="color: black;">{{.ProjectDetail.ProjectName}}</h2>
                 <div class="d-flex m-0 gap-5 ">
                     <div class="content-left" >
-                        <img src="https://images.unsplash.com/photo-1670672950186-06319ae47429?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=435&q=80" style="width: 500px; height: 400px; object-fit: cover;"alt="Project Image">
+                        <img src="/uploads/{{.ProjectDetail.Image}}" style="width: 500px; height: 400px; object-fit: contain;"alt="Project Image">
                     </div>
         
                     <div class="content-right" style="padding-left: 30px; padding-top:10px">

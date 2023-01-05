@@ -9,7 +9,7 @@
     </head>
 
     <body>
-        <nav class="navbar navbar-expand-lg d-flex fixed-top m-0 w-100" style="background-color: #AAAAAA; ">
+        <nav class="navbar navbar-expand-lg d-flex fixed-top m-0 w-100" style="background-color: #CBAF87; ">
             <div class="container-fluid" style="padding: 0px 100px;">
                 <a class="navbar-brand" href="/">
                     <img src="/public/asset/image/logo.png" alt="Logo Dumbways" style="width: 60px; height: auto">
@@ -72,7 +72,7 @@
                     
                     <!-- Contact -->
                     <div class="d-inline-flex mt-3 gap-4 ">
-                        <a href="#" class="btn btn-dark contact" style="text-decoration: none; padding: 6px 20px; background-color: #111727; color: white; border-radius: 180px; ">contact</a>
+                        <a href="/contact" class="btn btn-dark contact" style="text-decoration: none; padding: 6px 20px; background-color: #111727; color: white; border-radius: 180px; ">contact</a>
                         <p>download CV <a href="/public/asset/file/CV-Salsabila Putri Fathiyah.pdf" download>
                             <img class="logo-download" src="/public/asset/icon/download.svg" alt="download icon" style="width: 20px;"/></a>
                         </p>
@@ -126,14 +126,14 @@
             </div>
         </div>
         
-        <div class="container-fluid mt-0" style="background-color: #f8f8f8; padding: 30px; width: 100%;">
+        <div class="container-fluid mt-0" style="background-color: #CBAF87; padding: 30px; width: 100%;">
             <h3 class="fw-bold m-0 text-center mb-5" style="color: black;">MY PROJECT</h3>
             <div class="d-flex flex-wrap justify-content-center align-items-baseline gap-5" id="project">
 
                 <!-- Dynamic Content -->
                 {{range $index, $data := .Projects}}
                 <!-- Card 1 -->
-                <div class="card rounded-4" style="width: 23rem; height: auto; box-shadow: 0px 5px 20px #4e4c4c; background-color: white; padding:20px;">
+                <div class="card rounded-4" style="width: 23rem; height: auto; box-shadow: 0px 5px 20px #4e4c4c; background-color: #e8cda8; padding:20px;">
                     <div class="project_img" style="width: 100%;height: 300px;">
                         <img src="/uploads/{{$data.Image}}" style="width: 100%; height: 100%; border-radius: 15px; object-fit: cover;" alt="Project Image" class="image"/> 
                     </div>

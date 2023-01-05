@@ -9,12 +9,8 @@ import (
 	"table-relation-file-upload/connection"
 	"table-relation-file-upload/middleware"
 	"time"
-
-	// "log"
 	"net/http"
-	//"strconv"
 	"text/template"
-	//"time"
 
 	"github.com/gorilla/mux"
 	"github.com/gorilla/sessions"
@@ -58,10 +54,10 @@ func main() {
 	connection.DatabaseConnect()
 
 	// static folder
-	route.PathPrefix("/public/").Handler(http.StripPrefix("/public/", http.FileServer(http.Dir("./public"))))
+	route.PathPrefix("/public/").Handler(http.StripPrefix("/public/", http.FileServer(http.Dir("./public/"))))
 	route.PathPrefix("/uploads/").Handler(http.StripPrefix("/uploads/", http.FileServer(http.Dir("./uploads/"))))
 	// routing
-	route.HandleFunc("/", home).Methods("GET").Name("home")
+	route.HandleFunc("/", home).Methods("GET")
 	route.HandleFunc("/contact", contactMe).Methods("GET")
 	route.HandleFunc("/addProject", addProject).Methods("GET")
 	route.HandleFunc("/addProject", middleware.UploadFile(addProjectInput)).Methods("POST")
@@ -127,7 +123,7 @@ func home(w http.ResponseWriter, r *http.Request) {
     if session.Values["IsLogin"] != true {
         Data.IsLogin = false
 
-		rows, err := connection.Conn.Query(context.Background(), "SELECT project_name, start_date, end_date, description, technologies, image FROM tb_project")
+		rows, err := connection.Conn.Query(context.Background(), "SELECT id, project_name, start_date, end_date, description, technologies, image FROM tb_project")
 		if err != nil {
 			fmt.Println(err.Error())
 			return
@@ -136,7 +132,7 @@ func home(w http.ResponseWriter, r *http.Request) {
 		for rows.Next() {
 			var each = dataProject{}
 
-			var err = rows.Scan(&each.ProjectName, &each.StartDate, &each.EndDate, &each.Description, &each.Technologies, &each.Image)
+			var err = rows.Scan(&each.Id, &each.ProjectName, &each.StartDate, &each.EndDate, &each.Description, &each.Technologies, &each.Image)
 			if err != nil {
 				fmt.Println(err.Error())
 				return
@@ -317,8 +313,8 @@ func detailProject(w http.ResponseWriter, r *http.Request) {
 
 	ProjectDetail := dataProject{}
 
-	err = connection.Conn.QueryRow(context.Background(), "SELECT id, project_name, start_date, end_date, description, technologies FROM tb_project WHERE id=$1", ID).Scan(
-		&ProjectDetail.Id, &ProjectDetail.ProjectName, &ProjectDetail.StartDate, &ProjectDetail.EndDate, &ProjectDetail.Description, &ProjectDetail.Technologies)
+	err = connection.Conn.QueryRow(context.Background(), "SELECT id, project_name, start_date, end_date, description, technologies, image FROM tb_project WHERE id=$1", ID).Scan(
+		&ProjectDetail.Id, &ProjectDetail.ProjectName, &ProjectDetail.StartDate, &ProjectDetail.EndDate, &ProjectDetail.Description, &ProjectDetail.Technologies, &ProjectDetail.Image)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		w.Write([]byte("message : " + err.Error()))
