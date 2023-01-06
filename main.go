@@ -65,11 +65,12 @@ func main() {
 	route.HandleFunc("/deleteProject/{id}", deleteProject).Methods("GET")
 	route.HandleFunc("/editProject/{id}", editProject).Methods("GET")
 	route.HandleFunc("/editProjectInput/{id}", middleware.UploadFile(editProjectInput)).Methods("POST")
-
 	route.HandleFunc("/register", formRegister).Methods("GET")
 	route.HandleFunc("/register", register).Methods("POST")
+
 	route.HandleFunc("/login", formLogin).Methods("GET")
 	route.HandleFunc("/login", login).Methods("POST")
+
 	route.HandleFunc("/logout", logout).Methods("GET")
 
 	// port := 5000
